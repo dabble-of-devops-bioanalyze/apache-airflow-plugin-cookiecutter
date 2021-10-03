@@ -42,13 +42,16 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="{{ cookiecutter.project_short_description }}",
-    {%- if 'no' not in cookiecutter.command_line_interface|lower %}
     entry_points={
+    {%- if 'no' not in cookiecutter.command_line_interface|lower %}
         'console_scripts': [
             '{{ cookiecutter.project_slug }}={{ cookiecutter.project_slug }}.cli:main',
         ],
-    },
     {%- endif %}
+        'airflow.plugins': [
+            '{{cookiecutter.plugin_slug}} = {{cookiecutter.project_slug}}.{{cookiecutter.plugin_slug}}:{{cookiecutter.project_class}}'
+        ]
+    },
     install_requires=requirements,
 {%- if cookiecutter.open_source_license in license_classifiers %}
     license="{{ cookiecutter.open_source_license }}",
